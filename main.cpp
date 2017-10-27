@@ -38,10 +38,6 @@ ADC TaskADC(0);
 void main(void)
 {
 
-    // ################################################################################
-    //                                 TEST ZONE
-    // ################################################################################
-
     // ###################################
     // - Initiating new tasks	
     // - Setting Task Keys
@@ -68,12 +64,6 @@ void main(void)
     g_MainScheduler.attach(&GreenLED, 80);
     g_MainScheduler.attach(&BlueLED, 160);
     g_MainScheduler.attach(&HV, 0);
-
-
-    // ################################################################################
-    //                                 END TEST ZONE
-    // ################################################################################
-
 
     // - Run the Setup for the scheduler and all tasks
     g_MainScheduler.setup();
