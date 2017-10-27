@@ -30,7 +30,7 @@ uint8_t HOR::run()
     //################################
     // - Calculate the lines to be
     //   painted on the x-axis (roll) 
-    //   and z-axis (scroll), from the 
+    //   and z-axis (roll), from the 
     //   line formed by the extreme 
     //   values of the ADC and normalized 
     //   to 128 (number of pixels)
@@ -45,9 +45,9 @@ uint8_t HOR::run()
     {
         //################################
         // - Roll to the left 
-        //    Upper rectangule the sky
-        //    Middle rectangule, the division
-        //    Lower rectangule the ground
+        //    Upper rectangle: Sky
+        //    Middle rectangle: Division
+        //    Lower rectangle: Ground
         //################################
         
         // Paint the upper rectangule (sky)
@@ -85,7 +85,7 @@ uint8_t HOR::run()
             m_uint16tulValue = 0XFFFF; //white
             Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRect1, m_uint16tulValue);
 
-            // Upper triangule (sky)
+            // Upper triangle (sky)
             m_stRect2.xMin = (128/(-2.0*m_iX))*j;
             m_stRect2.xMax = 128;
             m_stRect2.yMin = m_iZ + m_iX + j - 3;
@@ -94,7 +94,7 @@ uint8_t HOR::run()
             Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRect2, m_uint16tulValue);
         }
 
-        // Paint the lower rectangule (ground)
+        // Paint the lower rectangle (ground)
         m_stRect.yMin = m_iZ - m_iX;
         m_stRect.yMax = 128;
         m_uint16tulValue = 0XAA00; //brown
@@ -105,9 +105,9 @@ uint8_t HOR::run()
     {
         //################################
         // - Roll to the right 
-        //    Upper rectangule the sky
-        //    Middle rectangule, the division
-        //    Lower rectangule the ground
+        //    Upper rectangle: Sky
+        //    Middle rectangle: Division
+        //    Lower rectangle : Ground
         //################################
         
         // Paint the upper rectangule (sky)
@@ -118,7 +118,7 @@ uint8_t HOR::run()
 
         for (j = 0; j <= 2*m_iX; j++)
         {
-            // Upper triangule (sky)
+            // Upper triangle (sky)
             m_stRect2.xMin = 0;
             m_stRect2.xMax = 128-(128/(2.0*m_iX))*j;
             m_stRect2.yMin = m_iZ - m_iX + j - 1;
@@ -144,7 +144,7 @@ uint8_t HOR::run()
             m_uint16tulValue = 0XFFFF; //white
             Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRect1, m_uint16tulValue);
 
-            // Lower triangule (ground)
+            // Lower triangle (ground)
             m_stRect2.xMin = 128-(128/(2.0*m_iX))*j-m_iHip;
             m_stRect2.xMax = 128;
             m_stRect2.yMin = m_iZ - m_iX + j + 1;
@@ -153,7 +153,7 @@ uint8_t HOR::run()
             Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRect2, m_uint16tulValue);
         }
 
-        // Paint the lower rectangule (ground)
+        // Paint the lower rectangle (ground)
         m_stRect.yMin = m_iZ + m_iX + 2 ;
         m_stRect.yMax = 128;
         m_uint16tulValue = 0XAA00; //brown
@@ -163,12 +163,12 @@ uint8_t HOR::run()
     {
         //################################
         // - Without roll
-        //    Upper rectangule the sky
-        //    Middle line, the division
-        //    Lower rectangule the ground
+        //    Upper rectangle: Sky
+        //    Middle line:  Division
+        //    Lower rectangle: Ground
         //################################
         
-        // Paint the upper rectangule (sky)
+        // Paint the upper rectangle (sky)
         m_stRect.yMin = -1;
         m_stRect.yMax =  m_iZ + m_iX;
         m_uint16tulValue = 0X00FF; //blue
@@ -180,7 +180,7 @@ uint8_t HOR::run()
         m_uint16tulValue = 0XFFFF; //white
         Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRect, m_uint16tulValue);
 
-        // Paint the upper rectangule (ground)
+        // Paint the upper rectangle (ground)
         m_stRect.yMin = m_iZ - m_iX + 1;
         m_stRect.yMax = 128;
         m_uint16tulValue = 0XAA00; //brown
@@ -200,37 +200,7 @@ uint8_t HOR::run()
 
 uint8_t HOR::setup()
 {
-
     m_bRunFlag = false; // - Sets RunFlag low
- 
-//################################
-// - Initializing screen, top half
-//   sky, bottom half ground and
-//   the middle a white line 
-//################################
-
-    Graphics_Rectangle m_stRectInit;
-    uint16_t l_uint16tValue;
-    m_stRectInit.xMin = 0;
-    m_stRectInit.xMax = 127;
-
-    m_stRectInit.yMin = 0;
-    m_stRectInit.yMax = 63;
-    l_uint16tValue = 0X00CF; //- Blue
-    Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRectInit,
-                                    l_uint16tValue);
-
-    m_stRectInit.yMin = 64;
-    m_stRectInit.yMax = 65;
-    l_uint16tValue = 0XFFFF; //- White
-    Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRectInit,
-                                    l_uint16tValue);
-    m_stRectInit.yMin = 65;
-    m_stRectInit.yMax = 127;
-    l_uint16tValue = 0XAA00; //- Brown
-    Graphics_fillRectangleOnDisplay(&g_sCrystalfontz128x128, &m_stRectInit,
-                                    l_uint16tValue);
-
     return (NO_ERR);
 }
 
