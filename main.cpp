@@ -30,6 +30,7 @@ uint8_t Task::m_u8NextTaskID = 0; // - Init task ID
 volatile static uint64_t g_SystemTicks = 0; // - The system counter.
 Scheduler g_MainScheduler; // - Instantiate a Scheduler
 ADC TaskADC(0);
+int counter = 0;
 
 // ################################################################################
 //                                       MAIN
@@ -154,11 +155,13 @@ extern "C"
         PastADC14Resultz = TaskADC.m_ADCResult;
         TaskADC.m_ADCResult = ADC14Resultz;
 
-        if(abs(PastADC14Resultz-ADC14Resultz)>30)
+        if(counter>2) // Permite estabilizar la medida del ADC al inicio de ejecución
         {
-        TaskADC.m_stMssg.std_u16IntData = ADC14Resultz;
-        TaskADC.m_stMssg.std_u16IntData2 = ADC14Resultx;
-        TaskADC.m_bMssgFlag = true;
+            TaskADC.m_stMssg.std_u16IntData = ADC14Resultz;
+            TaskADC.m_stMssg.std_u16IntData2 = ADC14Resultx;
+            TaskADC.m_bMssgFlag = true;
+        }else{
+        counter ++;
         }
 
         ADC14->CLRIFGR0 =  ADC14_CLRIFGR0_CLRIFG1
